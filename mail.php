@@ -3,7 +3,7 @@
 $txt="Hello World!";
 
 
-$flag=mail("505968815@qq.com","Test",$txt);
+$flag=mail("ly505968815@gmail.com","Test",$txt);
 
 echo $flag;
 
