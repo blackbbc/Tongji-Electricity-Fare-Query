@@ -1,5 +1,7 @@
 <?php
 
+require_once("mail.php");
+
 $ch=curl_init();
 
 $url='http://nyglzx.tongji.edu.cn/web/datastat.aspx';
@@ -27,8 +29,11 @@ $pattern='@'.$yyes."([\s\S]*)".$yes.'@';
 preg_match($pattern,$contents,$arr);
 preg_match_all("@<font color=\"Black\">(.*)</font>@U",$arr[1],$arr);
 
-echo $arr[1][2];
+$fare=(float)$arr[1][2];
 
-//print_r($arr);
+if ($fare<10)
+    reminder($fare);
+
+echo $fare;
 
 ?>
