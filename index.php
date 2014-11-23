@@ -4,36 +4,39 @@ require_once("mail.php");
 
 $ch=curl_init();
 
-$url='http://nyglzx.tongji.edu.cn/web/datastat.aspx';
+$url='http://192.168.250.43:8801/Default.aspx';
 
 $cookie_file=tempnam('./temp','cookie');
 
-$post_fields='__EVENTTARGET=&__EVENTARGUMENT=&__LASTFOCUS=&__VIEWSTATE=%2FwEPDwUKLTYwNjgwNDAyOQ8WBB4Jcm9vbXRhYmxlBQ9qZGRhdGFfcm9vbXZpZXceCWRhdGF0YWJsZQULamRkYXRhX3ZpZXcWAgIDD2QWBgIDDxBkZBYBAgFkAgUPEA8WBB4NRGF0YVRleHRGaWVsZAUIUk9PTU5BTUUeC18hRGF0YUJvdW5kZ2QQFRIPMDflj7flhazlr5MgICAgDzA45Y%2B35YWs5a%2BTICAgIA8wOeWPt%2BWFrOWvkyAgICAPMTDlj7flhazlr5MgICAgDzEy5Y%2B35YWs5a%2BTICAgIA8xM%2BWPt%2BWFrOWvkyAgICAPMTTlj7flhazlr5MgICAgDzE15Y%2B35YWs5a%2BTICAgIA8xNuWPt%2BWFrOWvkyAgICAPMTflj7flhazlr5MgICAgDzE45Y%2B35YWs5a%2BTICAgIA4xOeWPt%2BalvCAgICAgIA4yMOWPt%2BalvCAgICAgIA7mnKznp5E0ICAgICAgIA7mnKznp5E1ICAgICAgIA7mnKznp5E2ICAgICAgIA7noJTnqbYyICAgICAgIA7noJTnqbYzICAgICAgIBUSDzA35Y%2B35YWs5a%2BTICAgIA8wOOWPt%2BWFrOWvkyAgICAPMDnlj7flhazlr5MgICAgDzEw5Y%2B35YWs5a%2BTICAgIA8xMuWPt%2BWFrOWvkyAgICAPMTPlj7flhazlr5MgICAgDzE05Y%2B35YWs5a%2BTICAgIA8xNeWPt%2BWFrOWvkyAgICAPMTblj7flhazlr5MgICAgDzE35Y%2B35YWs5a%2BTICAgIA8xOOWPt%2BWFrOWvkyAgICAOMTnlj7fmpbwgICAgICAOMjDlj7fmpbwgICAgICAO5pys56eRNCAgICAgICAO5pys56eRNSAgICAgICAO5pys56eRNiAgICAgICAO56CU56m2MiAgICAgICAO56CU56m2MyAgICAgICAUKwMSZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZGQCFQ88KwANAGQYAQUJR3JpZFZpZXcxD2dkpo89MpdfnmrRKMTX0Kg7J6iJAf0%3D&__VIEWSTATEGENERATOR=46929FBD&__EVENTVALIDATION=%2FwEWIwKgudf4CgKehO%2FXDgKS2sqQDQKbhO%2FXDgLvo6%2FWAQKchO%2FXDgKco5mFBAKo7ZuOCQKQtOGrAwLGtc2eAwKUkP3jDgKphpG2AgL3ot33AgL3ov2mCALP9anUDQLO9e2UAQLO9fEwAsHtjeQDAsHtlaACAsHtmdwCAsHtnfwCAs7toZgNAs7tpbgNAs7tqdQNAsHt7ZQBApnz9msChpiS3QMCtcKkWgL%2BhMCpBAK7ovXVAwLVvLqTBQKewdn%2BDgLeuZHECgK8w4S2BAKjm5WMBgut5h0dn8%2FsuxUY6%2BbZTamdsYka&DistrictDown=%E5%98%89%E5%AE%9A%E6%A0%A1%E5%8C%BA&BuildingDown=%E6%9C%AC%E7%A7%916+++++++&RoomnameText=621&Submit=%E6%9F%A5%E8%AF%A2';
-
+$post_fields='__EVENTTARGET=&__EVENTARGUMENT=&__LASTFOCUS=&__VIEWSTATE=%2FwEPDwUKLTMxMDU4MDQxNw9kFgICAQ9kFgYCAQ8QZGQWAQIBZAIDDxAPFgYeDURhdGFUZXh0RmllbGQFCFJPT01OQU1FHg5EYXRhVmFsdWVGaWVsZAUGcm9vbWlkHgtfIURhdGFCb3VuZGdkEBUVBualvOagixHnoJTnqbbnlJ%2Flhazlr5MzIBHnoJTnqbbnlJ%2Flhazlr5M0ABHnoJTnqbbnlJ%2Flhazlr5M1AA%2FlrabkuInmpbwgICAgICAP5a2m5Zub5qW8ICAgICAgD%2BWtpuS6lOalvCAgICAgIBDopb%2FljJfkuIDmpbwgICAgEOilv%2BWMl%2BS4iealvCAgICAQ6KW%2F5YyX5Zub5qW8ICAgIBDopb%2FljJfkupTmpbwgICAgEOilv%2BWNl%2BS6jOalvCAgICAQ6KW%2F5Y2X5LiJ5qW8ICAgIBDopb%2FljZfkuIPmpbwgICAgEOilv%2BWNl%2BWFq%2BalvCAgICAQ6KW%2F5Y2X5Lmd5qW8ICAgIA%2Fop6PmlL7mpbwgICAgICAP6Z2S5bm05qW8ICAgICAgEOWQjuWLpOW3peWvkyAgICAR6LWk5bOw6Lev5ZCO5YukMgAS5ZCO5Yuk5YWs5a%2BT5LiJ55u4FRUABDE4NTMEMTg1NQQxODU2BDIxNTQEMjMyOQQyNDU5BDI2MjgEMjkxOAQzMjc3BDM1MjEEMzc2NQQ0MDI2BDQxNTAENDQyNQQ0NzYyBDUzMDYENTMwNwQ1NzI0BDU3OTIENTc4OBQrAxVnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dkZAIHDxBkZBYBZmQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgQFBGJ1eVIFBXVzZWRSBQxJbWFnZUJ1dHRvbjEFDEltYWdlQnV0dG9uMq%2Br%2BM3HEK%2B1B3kd%2BA47Ft24KBB61JLwTeDPM5TXAk09&__VIEWSTATEGENERATOR=CA0B0334&drlouming=1&drceng=2918&txt_fangjian=301&radio=buyR&ImageButton1.x=36&ImageButton1.y=16';
 
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_HEADER, 0);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_POST,1);
 curl_setopt($ch, CURLOPT_POSTFIELDS,$post_fields);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION,1);
 curl_setopt($ch, CURLOPT_COOKIEJAR,$cookie_file);
+
 $contents=curl_exec($ch);
+
 curl_close($ch);
 
+echo $contents;
 
-$yyes=date('Y-m-d',strtotime("-1 day"));
-$yes=date('Y-m-d',strtotime("-2 day"));
-
-$arr=[];
-$pattern='@'.$yyes."([\s\S]*)".$yes.'@';
-preg_match($pattern,$contents,$arr);
-preg_match_all("@<font color=\"Black\">(.*)</font>@U",$arr[1],$arr);
-
-$fare=(float)$arr[1][2];
-
-if ($fare<10)
-    reminder($fare);
-
-echo $fare;
+//$yyes=date('Y-m-d',strtotime("-1 day"));
+//$yes=date('Y-m-d',strtotime("-2 day"));
+//
+//$arr=[];
+//$pattern='@'.$yyes."([\s\S]*)".$yes.'@';
+//preg_match($pattern,$contents,$arr);
+//preg_match_all("@<font color=\"Black\">(.*)</font>@U",$arr[1],$arr);
+//
+//$fare=(float)$arr[1][2];
+//
+//if ($fare<10)
+//    reminder($fare);
+//
+//echo $fare;
 
 ?>
